@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration
 class SwaggerConfig {  // Swagger
 
     companion object {
-        private const val API_NAME = "Health Care API"
+        private const val API_NAME = "Gymila API"
         private const val API_VERSION = "0.0.1"
         private const val API_DESCRIPTION = "Gymila API 명세서"
     }
