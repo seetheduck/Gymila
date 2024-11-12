@@ -7,5 +7,4 @@ import jakarta.persistence.Id
 class Test (
     @Id
     val id: Int
-
 )
