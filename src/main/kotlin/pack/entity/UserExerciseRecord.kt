@@ -2,11 +2,14 @@ package pack.entity
 
 import jakarta.persistence.*
 import jakarta.validation.constraints.Size
-import org.hibernate.annotations.ColumnDefault
+import org.springframework.data.annotation.CreatedDate
+import org.springframework.data.annotation.LastModifiedDate
+import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import java.time.Instant
 
 @Entity
 @Table(name = "user_exercise_record")
+@EntityListeners(AuditingEntityListener::class)
 class UserExerciseRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,11 +20,11 @@ class UserExerciseRecord {
     @Column(name = "user_id")
     var userId: String? = null
 
-    @ColumnDefault("current_timestamp()")
-    @Column(name = "create_at")
+    @CreatedDate
+    @Column(name = "create_at", updatable = false)
     var createAt: Instant? = null
 
-    @ColumnDefault("current_timestamp()")
+    @LastModifiedDate
     @Column(name = "update_at")
     var updateAt: Instant? = null
 

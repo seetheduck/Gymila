@@ -21,7 +21,6 @@ class WeeklyNotice {
     @Column(name = "notice_content")
     var noticeContent: String? = null
 
-    @ColumnDefault("current_timestamp()")
     @Column(name = "notice_time")
     var noticeTime: Instant? = null
 

@@ -17,7 +17,6 @@ class WearableDatum {
     @Column(name = "user_id")
     var userId: String? = null
 
-    @ColumnDefault("current_timestamp()")
     @Column(name = "record_date")
     var recordDate: Instant? = null
 

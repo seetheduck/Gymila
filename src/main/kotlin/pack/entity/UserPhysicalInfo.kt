@@ -2,7 +2,6 @@ package pack.entity
 
 import jakarta.persistence.*
 import jakarta.validation.constraints.Size
-import org.hibernate.annotations.ColumnDefault
 import java.time.Instant
 
 @Entity
@@ -35,10 +34,6 @@ class UserPhysicalInfo {
     @Size(max = 255)
     @Column(name = "goal")
     var goal: String? = null
-
-    @ColumnDefault("current_timestamp()")
-    @Column(name = "measure_date")
-    var measureDate: Instant? = null
 
     @Column(name = "category_id")
     var categoryId: Int? = null

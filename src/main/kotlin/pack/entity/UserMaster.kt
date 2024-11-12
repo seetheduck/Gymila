@@ -3,10 +3,14 @@ package pack.entity
 import jakarta.persistence.*
 import jakarta.validation.constraints.Size
 import org.hibernate.annotations.ColumnDefault
+import org.springframework.data.annotation.CreatedDate
+import org.springframework.data.annotation.LastModifiedDate
+import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import java.time.Instant
 
 @Entity
 @Table(name = "user_master")
+@EntityListeners(AuditingEntityListener::class)
 class UserMaster {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,11 +29,11 @@ class UserMaster {
     @Column(name = "nickname")
     var nickname: String? = null
 
-    @ColumnDefault("current_timestamp()")
-    @Column(name = "create_date")
+    @CreatedDate
+    @Column(name = "create_date", updatable = false)
     var createDate: Instant? = null
 
-    @ColumnDefault("current_timestamp()")
+    @LastModifiedDate
     @Column(name = "update_date")
     var updateDate: Instant? = null
 
