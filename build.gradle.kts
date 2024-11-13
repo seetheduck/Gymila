@@ -35,6 +35,9 @@ dependencies {
     implementation("com.querydsl:querydsl-jpa:5.0.0:jakarta")  // 최신 버전 사용
     implementation("com.querydsl:querydsl-kotlin:5.0.0") // 코틀린용 QueryDSL
     kapt("com.querydsl:querydsl-apt:5.0.0:jakarta") // QueryDSL 코드 생성용 APT
+    implementation("io.jsonwebtoken:jjwt-api:0.11.5") // JWT
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
 }
 
 kotlin {
