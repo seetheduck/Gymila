@@ -53,14 +53,8 @@ class JwtService {
     JWT에서 userId 추출
     @return String
      */
-    fun getUserId(): String {
-        var accessToken: String = getJwt() ?: throw NoSuchElementException("empty jwt")
-
-        if (!accessToken.startsWith("Bearer ")) {
-            throw IllegalArgumentException("invalid jwt")
-        }
-
-        accessToken = accessToken.removePrefix("Bearer ")
+    fun getUserId(token: String): String {
+        val accessToken = token.removePrefix("Bearer ")
 
         val claims: Jws<Claims> = Jwts.parserBuilder()
             .setSigningKey(key)
@@ -68,7 +62,7 @@ class JwtService {
             .parseClaimsJws(accessToken)
 
         return claims.body["userId", String::class.java] ?: throw IllegalArgumentException("userId not found in JWT")
-
     }
+
 
 }

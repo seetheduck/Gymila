@@ -1,7 +1,10 @@
 package pack.config
 
+import io.swagger.v3.oas.models.Components
 import io.swagger.v3.oas.models.OpenAPI
 import io.swagger.v3.oas.models.info.Info
+import io.swagger.v3.oas.models.security.SecurityRequirement
+import io.swagger.v3.oas.models.security.SecurityScheme
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
@@ -20,7 +23,19 @@ class SwaggerConfig {  // Swagger
             .version(API_VERSION) // 버전
             .title(API_NAME)      // 이름
             .description(API_DESCRIPTION) // 설명
+
+        // JWT 인증 설정 추가
         return OpenAPI()
+            .components(
+                Components().addSecuritySchemes(
+                    "bearer-key",
+                    SecurityScheme()
+                        .type(SecurityScheme.Type.HTTP)
+                        .scheme("bearer")
+                        .bearerFormat("JWT")
+                )
+            )
+            .addSecurityItem(SecurityRequirement().addList("bearer-key"))
             .info(info)
     }
 }

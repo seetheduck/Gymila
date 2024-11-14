@@ -26,4 +26,9 @@ class Score {
 
     @Column(name = "badge")
     var badge: Int? = null
+
+    // Category와의 관계 매핑 (category_no와 Category 테이블의 id가 매칭된다고 가정)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_no", insertable = false, updatable = false)
+    var category: Category? = null
 }
