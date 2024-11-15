@@ -34,7 +34,7 @@ class JwtService {
             .setHeaderParam("type", "jwt")
             .claim("userId", userId)
             .setIssuedAt(Date())
-            .setExpiration(Date(System.currentTimeMillis() + 86400)) // 하루
+            .setExpiration(Date(System.currentTimeMillis() + 3600000)) // 하루
             .signWith(key)
             .compact()
     }

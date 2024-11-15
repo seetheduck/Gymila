@@ -13,6 +13,7 @@ import pack.service.GfcService
 class GfcController(
     private val gfcService: GfcService
     ) {
+    // 각 체급별 상위 1~5위 나열
     @GetMapping("/top-ranks")
     fun getTopRanks(
         @RequestParam(required = false) gfcCategoryNo: Int?
@@ -20,4 +21,5 @@ class GfcController(
         val topRanks = gfcService.getTopRanksByCategory(gfcCategoryNo)
         return ResponseEntity.ok(topRanks)
     }
+    
 }
