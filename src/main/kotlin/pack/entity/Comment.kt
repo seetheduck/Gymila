@@ -16,8 +16,9 @@ class Comment {
     @Column(name = "id", nullable = false)
     var id: Int? = null
 
-    @Column(name = "post_id")
-    var postId: Int? = null
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_id", nullable = true)
+    var community: Community? = null
 
     @Size(max = 255)
     @Column(name = "user_id")
@@ -33,4 +34,8 @@ class Comment {
 
     @Column(name = "is_secret")
     var isSecret: Boolean? = null
+
+    // 대댓글을 위한 부모 ID
+    @Column(name = "parent_id", nullable = true)
+    var parentId: Int? = null
 }

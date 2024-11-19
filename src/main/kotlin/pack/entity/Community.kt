@@ -35,4 +35,8 @@ class Community {
     @Lob
     @Column(name = "contents")
     var contents: String? = null
+
+    // 댓글과의 관계 설정 (양방향 관계)
+    @OneToMany(mappedBy = "community", cascade = [CascadeType.ALL], orphanRemoval = true)
+    var comments: MutableList<Comment> = mutableListOf()
 }
