@@ -39,5 +39,17 @@ class UserMaster {
 
     @ColumnDefault("0")
     @Column(name = "matching_is")
-    var matchingIs: Boolean? = null
+    var matchingIs: Int? = 0
+
+    fun updatePassword(password: String){
+        this.password = password
+    }
+
+    fun updateNickname(nickname: String){
+        this.nickname = nickname
+    }
+
+    fun updateUpdateDate(){
+        this.updateDate = Instant.now()
+    }
 }

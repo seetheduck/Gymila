@@ -6,4 +6,5 @@ import java.util.Optional
 
 interface UserMasterRepository : JpaRepository<UserMaster, Int> {
     fun findByUserId(userId: String): UserMaster?
+    fun deleteByUserId(userId: String)
 }

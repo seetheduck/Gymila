@@ -1,9 +1,10 @@
 package pack.controller
 
+import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.Parameter
+import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -13,18 +14,13 @@ import pack.dto.request.LoginReqDto
 import pack.dto.response.LoginResDto
 import pack.service.UserService
 
+@Tag(name = "Auth API", description = "APIs related to authentication")
 @RestController
 @RequestMapping("/auth")
 class AuthController {
 
     @Autowired
     private lateinit var userService: UserService
-
-    // 확인용
-    @GetMapping("/test")
-    fun test() : String {
-        return "auth test request check"
-    }
 
     /*
     유저 로그인
@@ -33,12 +29,12 @@ class AuthController {
      */
     @NoAuth
     @PostMapping("/login")
-    fun login(@RequestBody loginReqDto: LoginReqDto) : ResponseEntity<LoginResDto> {
+    @Operation(summary = "User login")
+    fun login(
+        @Parameter(required = true, description = "user ID, password")
+        @RequestBody loginReqDto: LoginReqDto
+    ): ResponseEntity<LoginResDto> {
         val response = userService.login(loginReqDto.userId, loginReqDto.password)
-        return if (response.isSuccess){
-            ResponseEntity.ok(response)
-        } else {
-            ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response)
-        }
+        return ResponseEntity.ok(response)
     }
 }
