@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
@@ -18,7 +19,7 @@ import pack.service.CommunityService
 @Tag(name = "Community API", description = "Operations related to community posts")
 @RestController
 @RequestMapping("/community")
-class CommunityController @Autowired constructor(
+class CommunityController (
     private val communityService: CommunityService
 ) {
 
@@ -79,14 +80,21 @@ class CommunityController @Autowired constructor(
     }
 
     @GetMapping("/posts")
-    fun getAllPosts(): ResponseEntity<List<CommunityResDto>> {
-        val response = communityService.getAllPosts()
+    fun getAllPosts(
+        @RequestParam(defaultValue = "0") page: Int,
+        @RequestParam(defaultValue = "10") size: Int
+    ): ResponseEntity<Page<CommunityResDto>> {
+        val response = communityService.getAllPosts(page, size)
         return ResponseEntity.ok(response)
     }
 
     @GetMapping("/posts/search")
-    fun searchPosts(@RequestParam title: String): ResponseEntity<List<CommunityResDto>> {
-        val response = communityService.searchPosts(title)
+    fun searchPosts(
+        @RequestParam title: String,
+        @RequestParam(defaultValue = "0") page: Int,
+        @RequestParam(defaultValue = "10") size: Int
+    ): ResponseEntity<Page<CommunityResDto>> {
+        val response = communityService.searchPosts(title, page, size)
         return ResponseEntity.ok(response)
     }
 }

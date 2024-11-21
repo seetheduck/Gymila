@@ -1,6 +1,8 @@
 package pack.service
 
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
 import pack.dto.request.CommunityReqDto
@@ -154,8 +156,9 @@ class CommunityService @Autowired constructor(
         communityRepository.deleteById(id)
     }
 
-    fun searchPosts(title: String): List<CommunityResDto> {
-        return communityRepository.findByTitleContaining(title).map { community ->
+    fun searchPosts(title: String, page: Int, size: Int): Page<CommunityResDto> {
+        val pageable = PageRequest.of(page, size)
+        return communityRepository.findByTitleContaining(title, pageable).map { community ->
             val files = uploadFileRepository.findByCommunityId(community.id.toString()).map { it.path!! }
             CommunityResDto(
                 id = community.id!!,
@@ -169,12 +172,10 @@ class CommunityService @Autowired constructor(
         }
     }
 
-    fun getAllPosts(): List<CommunityResDto> {
-        return communityRepository.findAll().map { post ->
-            // 파일 정보 조회
+    fun getAllPosts(page: Int, size: Int): Page<CommunityResDto> {
+        val pageable = PageRequest.of(page, size)
+        return communityRepository.findAll(pageable).map { post ->
             val files = uploadFileRepository.findByCommunityId(post.id.toString()).map { it.path!! }
-
-            // CommunityResDto로 변환
             CommunityResDto(
                 id = post.id!!,
                 userId = post.userId!!,

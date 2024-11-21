@@ -1,6 +1,8 @@
 package pack.service
 
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
 import pack.dto.request.CommentReqDto
 import pack.dto.response.CommentResDto
@@ -110,8 +112,9 @@ class CommentService @Autowired constructor(
     }
 
     // 특정 커뮤니티의 댓글 조회
-    fun getCommentsByCommunityId(communityId: Int): List<CommentResDto> {
-        val comments = commentRepository.findByCommunityId(communityId)
+    fun getCommentsByCommunityId(communityId: Int, page: Int, size: Int): Page<CommentResDto> {
+        val pageable = PageRequest.of(page, size)
+        val comments = commentRepository.findByCommunityId(communityId, pageable)
 
         return comments.map { comment ->
             CommentResDto(

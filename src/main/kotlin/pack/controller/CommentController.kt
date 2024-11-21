@@ -2,6 +2,7 @@ package pack.controller
 
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import pack.dto.request.CommentReqDto
@@ -10,7 +11,7 @@ import pack.service.CommentService
 
 @RestController
 @RequestMapping("/comments")
-class CommentController @Autowired constructor(
+class CommentController (
     private val commentService: CommentService
 ) {
 
@@ -63,8 +64,12 @@ class CommentController @Autowired constructor(
 
     // 특정 커뮤니티의 댓글 조회 (사용자 확인 불필요)
     @GetMapping("/community/{communityId}")
-    fun getCommentsByCommunityId(@PathVariable communityId: Int): ResponseEntity<List<CommentResDto>> {
-        val response = commentService.getCommentsByCommunityId(communityId)
+    fun getCommentsByCommunityId(
+        @PathVariable communityId: Int,
+        @RequestParam(defaultValue = "0") page: Int,
+        @RequestParam(defaultValue = "10") size: Int
+    ): ResponseEntity<Page<CommentResDto>> {
+        val response = commentService.getCommentsByCommunityId(communityId, page, size)
         return ResponseEntity.ok(response)
     }
 }
